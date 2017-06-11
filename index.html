@@ -36,6 +36,7 @@
                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                 </div>
             </div>
+
             <button id="post" class="postarea-button">投稿する</button>
         </div>
     </div>
@@ -44,7 +45,7 @@
         <div id="dummy"></div>
     </div>
 
-    <p class="footer"><strong>Forked by <a href="http://mlkcca.com/">Milkcocoa</a></strong></p>
+    <p class="footer"><strong>Forked by <a href="https://github.com/milk-cocoa/chat">Milkcocoa Chat</a></strong></p>
 
     <script>
         'use strict';
@@ -52,7 +53,6 @@
         firebase.initializeApp({databaseURL: "https://n0bisuke-76fc3.firebaseio.com"});
         const database = firebase.database();
         const ref = database.ref('messages');
-
         let last_message = "dummy";
 
         //初期読み込み & pushイベント検知
@@ -62,8 +62,10 @@
                 value: snapshot.val()
             });
         });
+
         //インジェクション対策
         const escapeHTML = (val) => $('<div>').text(val).html();
+
         //投稿処理
         const post = () => {
             const content = escapeHTML($("#content").val());
@@ -79,6 +81,8 @@
             }
             $("#content").val("");
         };
+
+        //メッセージをDOM追加
         const renderMessage = (message) => {
             const message_html = `<p class="post-text">${escapeHTML(message.value.content)}</p>`;
             let date_html = '';
@@ -89,9 +93,9 @@
             last_message = message.id;
         }
 
-        //クリック時
+        //クリック時の処理
         $('#post').click(() => post());
-        //エンターキータイプ時
+        //エンターキータイプ時の処理
         $('#content').keydown((e) => {
             if(e.which == 13){
                 post();
