@@ -67,7 +67,7 @@
         const escapeHTML = (val) => $('<div>').text(val).html();
 
         //投稿処理
-        const post = () => {
+        const postAction = () => {
             const content = escapeHTML($("#content").val());
             if(content && content !== "") {
                 ref.push({
@@ -94,11 +94,11 @@
         }
 
         //クリック時の処理
-        $('#post').click(() => post());
+        $('#post').click(() => postAction());
         //エンターキータイプ時の処理
         $('#content').keydown((e) => {
             if(e.which == 13){
-                post();
+                postAction();
                 return false;
             }
         });
